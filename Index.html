@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Search Form</title>
+</head>
+<body>
+
+    <h1>Search Form</h1>
+
+    <form action="/search" method="GET" onsubmit="return validateSearch()">
+        <label for="searchQuery">Search:</label>
+        <input type="text" id="searchQuery" name="q" placeholder="Enter your search query" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <script>
+        function validateSearch() {
+        var searchTerm = document.getElementById('searchQuery').value;
+
+        // Use a regular expression or any other validation logic to check for potential XSS
+        var xssPattern = /<script|<\/script|<img|<\/img|<svg|<\/svg/gi;
+        // Regular expression to check for SQL injection attempts
+        var sqlInjectionPattern = /SELECT|INSERT|UPDATE|DELETE|UNION|WHERE|AND|OR|FROM|DROP|TRUNCATE|TABLE|CREATE|ALTER|EXEC|SP_EXECUTESQL|EXECUTE|'|`|#|--|"|;|(\bOR\b\s=\s\b\d+\b)/gi;
+
+        if (xssPattern.test(searchTerm)) {
+            // Clear the search bar
+            document.getElementById('searchQuery').value = '';
+            return false; // Prevent form submission
+        }
+
+        if (sqlInjectionPattern.test(searchTerm)) {
+            // Clear the search bar
+            document.getElementById('searchQuery').value = '';
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+    }
+    </script>
+
+</body>
+</html>

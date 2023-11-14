@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+
+    <h1>Search Results</h1>
+
+    <div id="searchTermContainer">
+        <p>Search Term: <span id="searchTerm"></span></p>
+    </div>
+
+    <button onclick="goToHomePage()">Back to Home</button>
+
+    <script>
+        // Function to extract the search term from the URL parameters
+        function getSearchTerm() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('q');
+        }
+
+        // Function to set the search term in the page
+        function setSearchTerm() {
+            const searchTerm = getSearchTerm();
+            document.getElementById('searchTerm').innerText = searchTerm;
+        }
+
+        // Function to navigate back to the home page
+        function goToHomePage() {
+            window.location.href = 'index.html';
+        }
+
+        // Set the search term when the page loads
+        window.onload = function () {
+            setSearchTerm();
+        };
+    </script>
+
+</body>
+</html>
